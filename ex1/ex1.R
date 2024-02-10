@@ -1,13 +1,3 @@
-Para reter apenas os blocos de código R (chamados de "chunks") do seu arquivo Rmd e organizá-los em um popup de código para você copiar, você pode seguir estas etapas:
-  
-  1. Abra o arquivo Rmd no RStudio.
-2. Localize e copie os blocos de código R (os chunks) que você deseja reter.
-3. Cole esses blocos de código em um novo documento de texto ou em qualquer editor de texto.
-4. Organize os blocos de código como desejar, colocando-os entre ```{r} e ```.
-
-Aqui está uma versão organizada dos blocos de código R do seu arquivo Rmd, prontos para você copiar:
-  
-  ```r
 # Definindo um Diretório de trabalho
 setwd('../Rproject/')
 
@@ -75,7 +65,3 @@ receita_total <- dados_filmes %>%
 
 # Visualizando a nova tabela
 head(receita_total)
-
-```
-
-Agora você pode copiar esses blocos de código e usá-los conforme necessário!
