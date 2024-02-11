@@ -254,7 +254,7 @@ if (window.hljs) {
 
 
 
-<style type="text/css">* {box-sizing: border-box;margin: 0;padding: 0;}body {font-family: 'Roboto', sans-serif;font-size: 1.7rem;line-height: 1.6;background-color: #f8f8f8;}h1, h2, h3, h4, h5, h6 {font-weight: 700;color: #333;margin-bottom: 10px;}h1 {font-size: 3.75rem;}h2 {font-size: 3rem;}h3 {font-size: 2.625rem;}h4 {font-size: 2.25rem;}h5 {font-size: 1.875rem;}h6 {font-size: 1.5rem;}p {color: #666;margin-bottom: 20px;}a {color: #007bff;text-decoration: none;}a:hover {color: #0056b3;}ul, ol {margin-bottom: 20px;margin-left: 20px;}li {margin-bottom: 5px;}.container {max-width: 90%;margin: 0 auto;}table {width: 100%;border-collapse: collapse;margin-bottom: 20px;}th, td {padding: 10px;border: 1px solid #ccc;}th {background-color: #f0f0f0;font-weight: bold;text-align: left;}blockquote {background-color: #f0f0f0;border-left: 4px solid #007bff;padding: 10px;margin-bottom: 20px;font-size: 0.9em;}code {background-color: #f8f8f8;padding: 2px 5px;border: 1px solid #ccc;border-radius: 4px;}pre {background-color: #f8f8f8;padding: 10px;border: none;border-radius: 4px;overflow-x: auto;}pre code{border: none;}img {max-width: 100%;height: auto;border-radius: 4px;margin-bottom: 20px;}hr {border: none;border-top: 1px solid #ccc;margin: 20px 0;}.author, .date {font-size: 0.8em;}</style>
+<style type="text/css">* {box-sizing: border-box;margin: 0;padding: 0;}body {font-family: 'Roboto', sans-serif;font-size: 1.7rem;line-height: 1.6;background-color: #f8f8f8;}h1, h2, h3, h4, h5, h6 {font-weight: 700;color: #333;margin-bottom: 10px;}h1 {font-size: 4em;}h2 {font-size: 3rem;}h3 {font-size: 2.625rem;}h4 {font-size: 2.25rem;}h5 {font-size: 1.875rem;}h6 {font-size: 1.5rem;}p {color: #666;margin-bottom: 20px;}a {color: #007bff;text-decoration: none;}a:hover {color: #0056b3;}ul, ol {margin-bottom: 20px;margin-left: 20px;}li {margin-bottom: 5px;}.container {max-width: 90%;margin: 0 auto;}table {width: 100%;border-collapse: collapse;margin-bottom: 20px;}th, td {padding: 10px;border: 1px solid #ccc;}th {background-color: #f0f0f0;font-weight: bold;text-align: left;}blockquote {background-color: #f0f0f0;border-left: 4px solid #007bff;padding: 10px;margin-bottom: 20px;font-size: 0.9em;}code {background-color: #f8f8f8;padding: 2px 5px;border: 1px solid #ccc;border-radius: 4px;}pre {background-color: #f8f8f8;padding: 10px;border: none;border-radius: 4px;overflow-x: auto;}pre code{border: none;}img {max-width: 100%;height: auto;border-radius: 4px;margin-bottom: 20px;}hr {border: none;border-top: 1px solid #ccc;margin: 20px 0;}.author, .date {font-size: 0.8em;}</style>
 
 
 
@@ -382,7 +382,7 @@ o código! Please.</a></li>
 <p>Navegue até o diretório da pasta onde está o arquivo <a href="https://raw.githubusercontent.com/wilsonfrantine/R101/gh-page/data/MarvelMovies.csv">FilmesMarvel.csv</a>
 e defina-o como <strong>diretório de trabalho</strong>. Você só precisa
 digitar <code>setwd(&quot;o caminho para sua pasta&quot;)</code>:</p>
-<pre class="r"><code>setwd(&#39;../Rproject/&#39;)</code></pre>
+<pre class="r"><code>setwd(&#39;../../R101/Rmd&#39;)</code></pre>
 <blockquote>
 <p>Geralmente esse caminho é alguma coisa como:
 <code>C:/Users/Wilson/Documentos/</code></p>
@@ -401,7 +401,7 @@ usaremos o <code>tidyverse</code></p>
 <div id="id_3" class="section level3">
 <h3>📤 Importando os dados</h3>
 <p>Carregar o arquivo CSV e atribuir aos dados_filmes:</p>
-<pre class="r"><code>dados_filmes &lt;- read_csv(&quot;MarvelMovies.csv&quot;)</code></pre>
+<pre class="r"><code>dados_filmes &lt;- read_csv(&quot;../data/MarvelMovies.csv&quot;)</code></pre>
 <pre><code>## Rows: 30 Columns: 19
 ## ── Column specification ────────────────────────────────────────────────────────
 ## Delimiter: &quot;,&quot;

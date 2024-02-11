@@ -15,11 +15,14 @@ header {
     text-align: center;
     padding: 8vh 0 4vh; /* Ajustando a proporção */
 }
-
+h1, h2, h3, h4, h5, h6, h7, h8 {
+	line-height:1;
+}
 header h1 {
     font-size: 6vw; /* Ajustado para ocupar proporcionalmente */
     font-weight: 700;
     color: #333;
+	line-height:1;
 }
 
 .container {
@@ -130,4 +133,38 @@ footer p {
     width: 50px; /* Ajustando o tamanho das imagens */
     height: 50px;
     border-radius: 50%; /* Deixando as imagens redondas */
+}
+
+@media screen and (max-width: 600px)  {
+	header h1 {
+		font-size: 12vw;
+	}
+	.exercise-card {
+    background-color: #fff;
+    border-radius: 8px;
+    width: 90%;
+    padding: 20px;
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column; /* Altera a direção do layout para vertical */
+    align-items: center; /* Centraliza horizontalmente */
+    justify-content: center; /* Centraliza verticalmente */
+    transition: background-color 0.3s ease;
+	}
+
+	/* Estilos para as linhas ímpares */
+	.exercise-card:nth-child(odd) {
+		text-align: left;
+		flex-direction: column; /* Altera a direção do layout para vertical */
+		align-items: center; /* Centraliza horizontalmente */
+		align-items: center; /* Centraliza horizontalmente */
+
+	}
+
+	/* Estilos para as linhas pares */
+	.exercise-card:nth-child(even) {
+		flex-direction: column; /* Altera a direção do layout para vertical */
+		flex-direction: column; /* Altera a direção do layout para vertical */
+		align-items: center; /* Centraliza horizontalmente */
+	}
 }

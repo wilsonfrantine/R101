@@ -1,0 +1,335 @@
+---
+title: "Aprenda R com a Marvel"
+author: "Wilson Frantine-Silva"
+date: "2024-02-09"
+output:
+  html_document:
+    df_print: "kable"
+    css: ../css/markdown.css
+    output_dir: ../Ex1.html
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Quem nunca procrastinou vendo um ou vários filmes do MCU? 🤷‍♂️ A saga desde "Homem de Ferro" (2008) até "End Game" (2019) foi memorável (os demais, bom...)
+
+O importante é que com os dados das franquias, você aprenderá R de forma intuitiva e colocando a mão na massa, ou melhor, nos dados. Vamos explorar os dados dos filmes da Marvel entre 2008 até 2022.
+
+-   📁 [Definindo um Diretório de trabalho](#1)
+-   🛠️ [Instalando e carregando pacotes](#2)
+-   📤 [Importando dados](#3)
+-   🧹 [Limpando os dados](#4)
+-   🧐 [Analisando os dados](#5)
+-   🗜️ [Encanando códigos](#6)
+-   🤝 [Conclusão](#7)
+-   🏋🏻‍♂️ [Para exercitar](#8)
+-   🚀 [OMG, Só o código! Please.](#9 "Se você está sem paciencia para enrolação, clique aqui!")
+
+Antes de começarmos, precisamos preparar alguns passos, ok?
+
+### 📁 Defininindo o diretório de trabalho {#1}
+
+Navegue até o diretório da pasta onde está o arquivo [FilmesMarvel.csv](https://raw.githubusercontent.com/wilsonfrantine/R101/gh-page/data/MarvelMovies.csv) e defina-o como **diretório de trabalho**. Você só precisa digitar `setwd("o caminho para sua pasta")`:
+
+```{r}
+setwd('../../R101/Rmd')
+```
+
+> Geralmente esse caminho é alguma coisa como: `C:/Users/Wilson/Documentos/`
+>
+> Que 👿 é um diretório de trabalho?[^1]
+
+[^1]: **Diretório de trabalho:** É a pasta no seu computador que o *R* imagina que está no momento. Geralmente ele abre em seus documentos, que "fisicamente" fica em C:/Users/SeuUsuário/Documentos/ onde "SeuUsuário" é o nome de usuário do seu computar. No meu caso é "Wilso" sim, "Wilso", porque o gênio aqui fez correndo no dia e ficou com preguiça de arrumar... Geralmente, quando você configura o seu PC pela primeira vez, ele pede seu nome, e se você escreve direito (não é o meu caso), você ganha um nome de usuário igual ao seu primeiro nome.
+
+### 🛠 Instalando e Carregando pacotes {#2}
+
+A melhor coisa do R é que há um pacote[^2] para tudo. Hoje usaremos o `tidyverse`
+
+[^2]: **Pacote?** É um conjunto de funções "empacotadas" que algum anjo👼 do Senhor escreveu p facilitar o seu trabalho. Ou seja, ao invés de reinventar a roda, você só importa a roda da China e coloca na sua bicicleta para rodar. 🚴
+
+Para Instalar, use:
+
+```{r, eval=FALSE}
+install.packages("tidyverse")
+```
+
+Se correu tudo bem, carregue o pacote:
+
+```{r, warning=FALSE, message=FALSE}
+library(tidyverse)
+```
+
+### 📤 Importando os dados {#3}
+
+Carregar o arquivo CSV e atribuir aos dados_filmes:
+
+```{r}
+dados_filmes <- read_csv("../data/MarvelMovies.csv")
+```
+
+> ❗ **IMPORTANTE:** Caso seu arquivo tenha outro delimitador que não uma vírgula use a função 'read_delim("MarvelMovies.csv", delim = ";")'.\
+> Note que a função `read_delim()` tem o parâmetro `delim` que nos permite dizer que o simbolo "ponto e vírgula" é quem define os campos da nossa tabela.
+
+Para garantir que está tudo bem. Vamos vizualizar a nossa tabela `dados_filmes`, rapidamente no prompt de saída do R. Utilize a função `head()` para ver as seis primeiras linhas da tabela
+
+```{r}
+head(dados_filmes) 
+```
+
+> 💡 **DICA**: Você pode utilizar `tail(dados_filmes)` para ver as seis últimas linhas da tabela, ou View(dados_filmes) para ver esse objeto em uma aba separada do editor do *Rstudio*
+
+Se você vizualizou a tabela no prompt de saída com todos os campos, é sinal que está tudo certo!
+
+### 🧹 Limpando dados {#4}
+
+Frequentemente os dados não estão formatados corretamente para a análise. Os nomes das colunas em nossa tabela original são difíceis de interpretar, então vamos alterá-los para algo mais amigável. **Os nomes atuais das colunas:**
+
+```{r}
+#Checar o nome das colunas
+colnames(dados_filmes)
+```
+
+Como vimos, nomes péssimos...
+
+*Vamos dar novos nomes!*
+
+> ❗ **IMPORTANTE:** Deve haver um nome para para cada coluna
+
+```{r}
+#novos nomes
+novo_nome_colunas <- c(
+  "filme",
+  "categoria",
+  "receita_mundial_milhoes",
+  "percentual_orcamento_recuperado",
+  "percentual_criticos",
+  "percentual_audiencia",
+  "desvio_percentual_audiencia_criticos",
+  "orcamento_milhoes",
+  "receita_domestica_milhoes",
+  "receita_internacional_milhoes",
+  "fim_de_semana_abertura_milhoes",
+  "segundo_fim_de_semana_milhoes",
+  "queda_1o_para_2o_fim_de_semana",
+  "percentual_receita_fim_de_semana_abertura",
+  "percentual_receita_domestica",
+  "percentual_receita_internacional",
+  "percentual_orcamento_fim_de_semana_abertura",
+  "ano",
+  "fonte"
+)
+```
+
+Agora, basta atribuir os nomes:
+
+```{r}
+colnames(dados_filmes) <- novo_nome_colunas
+```
+
+Acima a função `colnames()` atribui os nomes do ["*vetor*"](#tooltip "vetor é uma sequencia de elementos, tantos números quanto letras, palavras ou uma mistura dos dois") `novo_nome_colunas`
+
+> 💡 **Voce já sabe, mas não custa lembrar**: Você pode utilizar `View(dados_filmes)` para visualizar graficamente a tabela no *Rstudio*
+>
+> Mas você também pode utilizar a função `head()` para mostrar o cabeçalho da tabela. `head(dados_filmes, n = 3)`
+
+#### Continuando a limpeza:
+
+Repare que nossa tabela tem colunas de percentagem que *não são números* 🤦🏻‍♂️. Os campos percentagem tem o símbolo "%" inseridos ao lado dos números, o que obriga o R à interpretá-los como texto.
+
+**Vamos fazer uma mágica e corrigir isso:**
+
+```{r}
+dados_filmes <- 
+  dados_filmes %>%
+  mutate_if(
+    ~any(str_detect(.,"%")), ~as.numeric(str_remove_all(., "%"))
+    )
+head(dados_filmes)
+```
+
+Mas que 🤬 acontenceu ali em cima?
+
+As linhas acima pegam a tabela `dados_filmes` mudando os valores nas colunas **se** ele contiver qualquer simbolo de percentagem "%", utilizando `str_detect(., "%")`, em seguida traforma-o em numérico com `~as.numeric(str_remove_all(., "%")`.
+
+Note que as funções `str_detect` e `str_remove_all`, respectivamente, encontram caracteres (ou `strings` como são chamadas no R) e os removem.
+
+Quer mais detalhes? Olhe no rodapé [^3]
+
+[^3]: **O código** `dados_filmes <- dados_filmes %>% mutate_if(~any(str_detect(.,"%")),~as.numeric(str_remove_all(.,"%")))`\
+    quer dizer que `dados_filmes` é encanado com `%>%` para dentro da função mutate_if(), que diz: mude "se" as condições forem atendidas. A condição é: tem "%" no valor? Para testar isso escrevemos: `~any(str_detect(.,"%"))` ; Que traduzindo diz: ao longo das colunas (\~) em qualquer uma delas (any), detecte a string `"%"` com `str_detect;` se detectar retorne verdadeiro, senão falso. Após a virgula com: `~as.numeric(str_remove_all(., "%"))` dizemos o seguinte: em função do que vier de lá (\~) transforme em numérico com `as.numeric()` o resultado de str_remove_all(. , "%") que remove de todas as colunas `.` o caracter `"%"`
+
+### 🧐 Analisando os dados {#5}
+
+Aleluia...🙌🏽\
+Eu sei. Parece muito trabalho, mas um dia você me agradecerá (ou não 🤷🏻‍♀️)
+
+Então, partiu!🚀
+
+Uma forma muito rápida de olhar um resumo dos dados é com a função `summary()` . Com ela podemos ter um resumo estatístico de cada variável (ou seja, cada coluna da tabela).
+
+```{r}
+summary(dados_filmes) %>% head(1)
+```
+
+Meio bagunçado, certo... Vamos melhorar isso!\
+
+```{r}
+dados_resumidos <- 
+dados_filmes %>% summary() %>% 
+  as.data.frame() %>%
+  setNames(c("V1","coluna", "Freq")) %>%
+    separate(Freq, into  = c("medida", "valores"), sep = ":") %>%
+  select(coluna, medida, valores) %>% drop_na()
+
+head(dados_resumidos, n=12)
+```
+
+Agora temos uma tabela com 3 colunas: `coluna`, `medida` e `valores`. Para cada coluna que tinhamos, `summary()` fez o levantamento que poderia: mínimo, máximo, média, mediana e quartis quando os valores eram números; ou contagens identificação de classe e categoria quando era texto.
+
+> 💡 **Código explicado:** 👇🏽
+>
+> 1.  No código acima repetimos o `summary()` nos `dados_filmes`, mas transformamos a saída em um `data.frame` (quadro de dados ou tabela, como quizer);
+>
+> 2.  Depois demos nomes às colunas com `setNames("V1", "coluna", "Freq"`);
+>
+> 3.  Usando `separate()` e "dois pontos" `":"` como separador, quebramos os dados dentro da coluna `Freq` (que estavam como "Mean: 10.1"), em duas novas colunas, as quais chamamos de `"medida"` e `"valores"` ;
+>
+> 4.  por fim, usamos `select()` para selecionar `filmes`, `medidas` e `valores`e removemos os dados nulos com `drop_na()`
+
+#### 🔽 Filtrando dados:
+
+Podemos aproveitar os `dados_resumidos` e viltrar algumas colunas para ver o padrão dos dados. Por exemplo, imagine que queira ver todas as medidas sumarizadas da coluna `receita_mundial_milhoes` :
+
+```{r}
+dados_resumidos %>% filter( coluna == "receita_mundial_milhoes")
+```
+
+Ou ainda se quiser ver o **máximo** de todas as colunas basta:
+
+```{r}
+dados_resumidos %>%
+  filter(str_detect(medida, "Max"))
+```
+
+Agora, imagene que queira trabalhar com a tabela original, `dados_filmes` e filtrar os filmes com receita mundial acima de 1 bilhão
+
+```{r}
+dados_filmes %>% filter(receita_mundial_milhoes > 1000)
+```
+
+> Se quiser salvar o resultado em um objeto, basta utilizar:\
+> `filmes_acima_de_1_bilhao <- filter(dados_filmes, receita_mundial_milhoes > 1000)`
+
+#### ⬇️ Ordenar os dados
+
+Para ordenar filmes por percentual de orçamento recuperado em ordem decrescente
+
+```{r}
+arrange(dados_filmes, desc(percentual_orcamento_recuperado))
+```
+
+a função `arrange()` reordena os `dados_filmes` de com base na classificação feita por `desc` e os dados da coluna `percentual_orcamento_recuperado`
+
+para salvar essa tabela ordenada para calcularmos sobre ela, vamos utilizar:
+
+```{r}
+filmes_ordenados <- arrange(dados_filmes, desc(percentual_orcamento_recuperado))
+```
+
+#### ➕ Somar colunas e linhas especificas
+
+Agora utilizamos `filmes_ordandos` para somar os registros do cinco filmes mais rentáveis da marvel, que agora estão entre as linhas 1 e 5 da coluna especificada
+
+```{r}
+sum(filmes_ordenados[1:5, "receita_mundial_milhoes"])
+```
+
+#### 🗜️ Encanando códigos {#6}
+
+Escrevendo em R você pode se tornar o Super Mário 👨🏻‍🔧(ou quase...). O *R* tem um operador interessante `%>%` ou `|>` ("pipe" ou "cano") que te permite encanar o código à esquerda do operador para dentro do que está à direita do operador.
+
+Veja o código abaixo e note como ele é a mesma coisa do código anterior para soma:
+
+```{r}
+filmes_ordenados[1:5, "receita_mundial_milhoes"] %>% sum()
+```
+
+Funciona igual para o outro operador `|>`
+
+```{r}
+filmes_ordenados[1:5, "receita_mundial_milhoes"] |> sum()
+```
+
+A tradução para esse código é: pegue a tabela `filmes_ordenados` das linhas 1 à 5 na coluna "receita_mundial_milhoes" e some.
+
+A melhor coisa é que, com os canos, você pode continuar encanando códigos para dentro de outros quase que para sempre. Por exemplo, digamos que eu queira dividir esse resultado por 2 (`/2`) e depois fazer a raiz quadrada disso (`srqt()`):
+
+```{r}
+filmes_ordenados[1:5, "receita_mundial_milhoes"] %>% sum() / 2 %>% sqrt()
+```
+
+Você pode ir trabalhando com esses dados até ter o resultado que quiser.
+
+#### 🎯 Selecionar colunas específicas
+
+E se eu quiser uma tabala específica só com as colunas `'filme'` e `'categoria'` ? Simples, encane `dados_filmes` para dentro de `select` dizendo quais colunas quer:
+
+```{r}
+dados_filmes %>% select(filme, categoria)
+```
+
+#### ⭐Criando novas variáveis
+
+Criar novas variáveis é útil quando precisamos calcular coisas novas. Digamos que gostaríamos de calcular a receita total (doméstica + internacional) e adicionar como uma nova coluna.\
+\
+Para isso temos `mutate`, certamente uma das ferramentas mais importantes do seu arsenal:
+
+Mas, além disso, como a tabela ficaria com muitas variáveis, vamos selecionar apenas o `filme` e a `receita_total`, utilizando `select` e os canos(`%>%`):
+
+```{r}
+receita_total <- dados_filmes %>% 
+  mutate(receita_total = receita_domestica_milhoes + receita_internacional_milhoes) %>%
+  select(filme, receita_total)
+
+receita_total
+```
+
+### 🤝Conclusão {#7}
+
+Ufaa... Chega por hora, certo?
+
+Só neste exercício você já aprendeu:
+
+-   📁 [Como definir um Diretório de trabalho](#1)
+-   🛠️ [Como instalar e carregar pacotes](#2)
+-   📤 [Como importar dados](#3)
+-   🧹 [Como limpar dados de textos indesejados](#4)
+-   🧐 [Como interagir com tabelas, como: filtrar, ordenar, somar dados...](#5)
+-   🗜️ [Como encadear códigos com "%\>%"](#6)
+
+*R* parece complexo, e é um pouco, mas é muito poderoso. Te mantém organizado e consistente. Sem falar que, você pode ganhar tempo no futuro se atualizar seus dados e precisar refazer as análises.
+
+### 🏋🏻‍♂️ Para exercita {#8}
+
+Use o que aprendeu e responda:
+
+1.  Quais os três filmes do MCU de maior sucesso com a crítica? (Veja se você concorda)
+2.  E quais os três filmes de maior sucesso com o público? (Seria a voz do povo a voz de Deus?)
+3.  Qual foi o mais lucrativo, somando receitas domésticas (EUA) e internacional?
+4.  Qual a média de investimento recuperado?
+
+### 🚀 Não enrola, eu quero o código... {#9}
+
+Sem tempo pra ler? Segue o [código](https://raw.githubusercontent.com/wilsonfrantine/R101/main/ex1/ex1.R "Copie e cole o código no seu Rstudio")📜
+
+#### Referências:
+
+1.  Vozes da minha cabeça (2024)... Brincadeira, tem links uteis abaixo:
+2.  [Tidyverse](https://www.tidyverse.org/ "Clique para ir ao site do pacote"). R packages for data science.
+3.  [ChatGPT](chat.openai.com "Link para o chatGPT"). Nao é crime se você souber o que está acontecendo. Do contrário, você está se sabotando...
+
+The end... [Você pode voltar agora](https://wilsonfrantine.github.io/R101 "Clique no link para voltar à lista de exercícios"), ou ler:
+
+#### As infinitas notas de rodapé...
