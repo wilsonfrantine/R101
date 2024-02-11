@@ -1,0 +1,133 @@
+/* Reset de estilos */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    line-height: 1.6;
+    background-color: #f8f8f8;
+}
+
+header {
+    text-align: center;
+    padding: 8vh 0 4vh; /* Ajustando a proporção */
+}
+
+header h1 {
+    font-size: 6vw; /* Ajustado para ocupar proporcionalmente */
+    font-weight: 700;
+    color: #333;
+}
+
+.container {
+    max-width: 90%;
+    margin: 0 auto;
+}
+
+main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 80vh;
+}
+/* Estilos gerais para o exercise-card */
+.exercise-card {
+    background-color: #fff;
+    border-radius: 8px;
+    width: 60vw;
+    padding: 20px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    transition: background-color 0.3s ease;
+}
+
+/* Estilos para as linhas ímpares */
+.exercise-card:nth-child(odd) {
+    display: flex;
+    flex-direction: row; /* Inverte a ordem dos itens nas linhas ímpares */
+	text-align: left;
+}
+.exercise-card:nth-child(odd) .button {
+    display: flex;
+    justify-content: flex-end;
+}
+
+
+/* Estilos para as linhas pares */
+.exercise-card:nth-child(even) {
+    display: flex;
+    flex-direction: row-reverse; /* Mantém a ordem padrão dos itens nas linhas pares */
+}
+
+/* Estilos para a imagem */
+.exercise-card img {
+    width: 150px; /* Ajustando a largura da imagem */
+    height: 150px; /* Ajustando a altura da imagem */
+    border-radius: 50%;
+    margin-left: 20px;
+	margin-right: 20px;
+}
+
+/* Estilos para o conteúdo do exercício */
+.exercise-content {
+    flex-grow: 1; /* Permitindo que o texto ocupe todo o espaço disponível */
+}
+
+/* Estilos para o conteúdo do cartão */
+.card-content {
+    flex-grow: 1;
+}
+
+.card-content h3 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.card-content p {
+    color: #666;
+    margin-bottom: 20px;
+}
+
+.card-content a {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 4px;
+}
+
+.card-content a:hover {
+    background-color: #0056b3;
+}
+
+footer {
+    text-align: center;
+    padding: 20px 0;
+    background-color: #f0f0f0; /* Tom mais claro */
+    color: #333; /* Cor do texto */
+}
+
+footer p {
+    margin-bottom: 10px; /* Espaçamento abaixo do parágrafo */
+}
+
+.social-icons {
+    width: 60%; /* Define a largura do container para 60% da tela */
+    margin: 0 auto; /* Centraliza horizontalmente */
+    display: flex;
+    justify-content: space-around; /* Distribui os ícones igualmente */
+    align-items: center; /* Centraliza verticalmente */
+}
+
+.social-icon {
+    width: 50px; /* Ajustando o tamanho das imagens */
+    height: 50px;
+    border-radius: 50%; /* Deixando as imagens redondas */
+}
